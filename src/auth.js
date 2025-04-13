@@ -77,7 +77,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
         async jwt({token, user}) {
             if (user) { // User is available during sign-in
                 let dbUser = await fetchUser(user.email)
-                // console.log("jwt user", dbUser)
                 token.username = dbUser.username
                 token.displayName = dbUser.displayname
                 token.userId = dbUser._id
@@ -91,7 +90,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
             session.user.displayName = token.displayName
             session.user.userId = token.userId
             session.user.name = token.name
-
 
             return session
         },
