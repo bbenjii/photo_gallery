@@ -10,16 +10,6 @@ async function handleSubmit(formData) {
     "use server"
     console.log("function called")
     let user =  await signIn("credentials", formData)
-    // let user =  await signIn()
-    //
-    // console.log("sign in done")
-
-    // redirect("/");
-    //
-    // if (user !== null) {
-    //     redirect("/");
-    // }
-    // console.log(user)
 
 
 }

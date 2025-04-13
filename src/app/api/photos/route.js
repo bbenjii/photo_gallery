@@ -1,5 +1,4 @@
 import s3Client from "@/lib/core/s3-client";
-// import {getImageURL, uploadImage, getImage, deleteImage, listImages} from "@/lib/models/objectModel";
 import {fetchPhoto, uploadImage, listPhotos} from "@/lib/models/photosModel";
 const path = require("path");
 

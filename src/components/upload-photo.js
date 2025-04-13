@@ -69,7 +69,6 @@ function UploadForm({uploadFormIsOpen, setUploadFormIsOpen}) {
     return (
         <>
             <Dialog open={uploadFormIsOpen} onOpenChange={setUploadFormIsOpen}>
-
                 <DialogContent>
                     <form onSubmit={(e)=>{
                         e.preventDefault();
@@ -81,12 +80,11 @@ function UploadForm({uploadFormIsOpen, setUploadFormIsOpen}) {
                         for (let i = 0; i < files.length; i++) {
                             formData.append("images", files[i]); // use the same key for all files
                         }
-                        // formData.append("images", files)
 
                         console.log("Files to upload:", formData.get("images"));
                         let data = uploadImages(formData);
                         setUploadFormIsOpen(false);
-                        console.log(data)
+                        // console.log(data)
                     }}>
                     <DialogHeader>
                         <DialogTitle>UPLOAD PHOTOS</DialogTitle>
