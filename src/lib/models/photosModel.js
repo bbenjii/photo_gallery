@@ -65,6 +65,10 @@ export async function uploadImage(filename, filetype, filebuffer){
 }
 
 export async function deletePhotos(id){
+    const client = await mongoClient()
+    const db = client.db("photoGalleryDB")
+    const collection = db.collection("photos")
+
     const query = {"_id": new ObjectId(id)}
     let res = await collection.deleteOne(query)
 
