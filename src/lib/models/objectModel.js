@@ -19,7 +19,8 @@ export async function getObjectURL(object_key) {
         Key: object_key,
     });
 
-    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 60 * 60 });
+    let client = await s3Client()
+    const signedUrl = await getSignedUrl(client, command, { expiresIn: 60 * 60 });
     return await signedUrl
 
 }
@@ -33,9 +34,10 @@ export async function uploadObject(filename, filetype, filebuffer) {
         Body: filebuffer,
         ContentType: filetype,
     });
+    let client = await s3Client()
 
     try {
-        await s3Client.send(command);
+        await client.send(command);
         return({ message: "ok" });
     } catch (err) {
         console.error(err);

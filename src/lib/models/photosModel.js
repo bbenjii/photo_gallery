@@ -1,11 +1,10 @@
 import mongoClient from "@/lib/core/mongodb";
 import {ObjectId} from 'mongodb'
 import * as objectModel from './objectModel'
-import s3Client from "@/lib/core/s3-client";
 
 
 export async function fetchPhoto(id){
-    const client = await mongoClient
+    const client = await mongoClient()
     const db = client.db("photoGalleryDB")
     const collection = db.collection("photos")
 
@@ -20,7 +19,7 @@ export async function fetchPhoto(id){
 }
 
 export async function listPhotos(){
-    const client = await mongoClient
+    const client = await mongoClient()
     const db = client.db("photoGalleryDB")
     const collection = db.collection("photos")
 
@@ -39,7 +38,7 @@ export async function listPhotos(){
 }
 
 export async function uploadImage(filename, filetype, filebuffer){
-    const client = await mongoClient
+    const client = await mongoClient()
     const db = client.db("photoGalleryDB")
     const collection = db.collection("photos")
 
