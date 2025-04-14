@@ -10,9 +10,10 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import s3Client from "@/lib/core/s3-client";
 
 
-const bucketName = process.env._AWS_S3_BUCKET;
 
 export async function getObjectURL(object_key) {
+    const bucketName = process.env._AWS_S3_BUCKET;
+
     const command = new GetObjectCommand({
         Bucket: bucketName,
         Key: object_key,
@@ -24,6 +25,8 @@ export async function getObjectURL(object_key) {
 }
 
 export async function uploadObject(filename, filetype, filebuffer) {
+    const bucketName = process.env._AWS_S3_BUCKET;
+
     const command = new PutObjectCommand({
         Bucket: bucketName,
         Key: `benollomo/${filename}`,

@@ -3,12 +3,12 @@ import {ObjectId} from 'mongodb'
 import * as objectModel from './objectModel'
 import s3Client from "@/lib/core/s3-client";
 
-const client = await mongoClient
-const db = client.db("photoGalleryDB")
-const collection = db.collection("photos")
-
 
 export async function fetchPhoto(id){
+    const client = await mongoClient
+    const db = client.db("photoGalleryDB")
+    const collection = db.collection("photos")
+
     const query = {"_id": new ObjectId(id)}
     objectModel.getObjectURL()
     const options = {}
@@ -20,6 +20,10 @@ export async function fetchPhoto(id){
 }
 
 export async function listPhotos(){
+    const client = await mongoClient
+    const db = client.db("photoGalleryDB")
+    const collection = db.collection("photos")
+
     const query = {}
     const options = {
         sort: { "upload_date": -1 }
@@ -35,6 +39,10 @@ export async function listPhotos(){
 }
 
 export async function uploadImage(filename, filetype, filebuffer){
+    const client = await mongoClient
+    const db = client.db("photoGalleryDB")
+    const collection = db.collection("photos")
+
     let res = await objectModel.uploadObject(filename, filetype, filebuffer);
     if(res.message === "ok"){
         let data = {
