@@ -72,8 +72,6 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
         await fetchImages()
     }
 
-    // return <></>
-
     const gril_col = [
         "grid-cols-1",
         "grid-cols-2",
@@ -96,11 +94,11 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
                     {
                         columns.map((column, index) => {
                             return (
-                                <div key={index} className={`grid gap-y-4  `}>
+                                <div key={index} className={`grid grid-flow-row auto-rows-max gap-y-4`}>
                                     {
                                         column.map((image, index) =>
                                             (
-                                                <div key={index} className={`${selectedImage === image ? "" : ""} `}>
+                                                <div key={index} className={`h-fit`}>
                                                     <ImageView image={image} session={session} setDeleteDialogIsOpen={setDeleteDialogIsOpen} setSelectedImage={setSelectedImage} selected={selectedImage === image} />
                                                 </div>
                                             ))
@@ -127,7 +125,7 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
 
 function ImageView({image, index, session, setDeleteDialogIsOpen, setSelectedImage, selected}) {
     return (
-        <div key={index} className={"relative border group"} onClick={() => setSelectedImage(image)}>
+        <div key={index} className={"relative group h-fit"} onClick={() => setSelectedImage(image)}>
             {
                 session &&
                 <div className={`flex justify-between invisible absolute top-0 w-full p-2  group-hover:visible ${selected ? "visible lg:invisible" : ""}`}>
@@ -148,11 +146,11 @@ function ImageView({image, index, session, setDeleteDialogIsOpen, setSelectedIma
                 key={index}
                 src={`${image.url}`}
                 alt={`Image ${index}`}
-                width={500}
-                height={500}
+                // width={500}
+                // height={500}
                 // fill
                 className=""
-                // style={{ height: "auto", display: "block" }}
+                style={{ height: "auto", display: "block" }}
             />
         </div>
     )
