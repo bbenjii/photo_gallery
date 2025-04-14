@@ -69,7 +69,7 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
 
         const data = await response.json()
 
-        fetchImages()
+        await fetchImages()
     }
 
     // return <></>

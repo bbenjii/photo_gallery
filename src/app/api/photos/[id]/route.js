@@ -1,6 +1,3 @@
-export const runtime = "nodejs";
-export const dynamic = 'force-dynamic';
-
 import {deletePhotos} from "@/lib/models/photosModel";
 
 export async function DELETE(request, { params }){
