@@ -62,7 +62,7 @@ export function LoginForm({
                                       "use server"
                                       try {
                                           await signIn(provider.id, {
-                                              redirectTo: props.searchParams?.callbackUrl ?? "",
+                                              redirectTo: props.searchParams?.callbackUrl || "https://gallery.benollomo.com",
                                           })
                                       } catch (error) {
                                           // Signin can fail for a number of reasons, such as the user
