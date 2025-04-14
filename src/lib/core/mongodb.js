@@ -3,7 +3,6 @@ import { MongoClient } from 'mongodb';
 
 export default async function mongoClient(){
     const uri = process.env.MONGODB_URI; // keep it in your .env file
-    console.log(`mongodb mongo client url:${uri}`);
     const options = {};
 
     let client;
