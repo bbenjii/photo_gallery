@@ -1,12 +1,18 @@
-import {fetchPhoto, uploadImage, listPhotos} from "@/lib/models/photosModel";
+import {deletePhotos} from "@/lib/models/photosModel";
 
 export async function DELETE(request, { params }){
     const searchParams = request.nextUrl.searchParams;
+    const { id } = await params
+    console.log(id);
 
-    const { photo_id } = await params
-    console.log(photo_id);
-
-    let result = { "message":"Succesfully Deleted" + photo_id};
+    const res = await deletePhotos(id);
+    let result = {}
+    if (res.message === "ok") {
+        result.message = "Successfully deleted photo with id " + id;
+    }
+    else {
+        result.message = "fail"
+    }
 
     return new Response(JSON.stringify(result), {
         status: 201,

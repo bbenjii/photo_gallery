@@ -14,7 +14,7 @@ export default async function Home() {
 
     return (
     <div className="flex h-screen w-screen items-center  overscroll-y-auto flex-col font-[family-name:var(--font-geist-sans)]">
-      <main className="flex items-center flex-col md:w-200 lg:w-250 xl:w-350 2xl:450 px-5 md:px-15 relative ">
+      <main className="flex items-center w-full flex-col md:w-200 lg:w-250 xl:w-350 2xl:450 px-5 md:px-15 relative ">
           {session && <PhotoUpload/>}
           <Header section={"photos"} session={session} />
           <div className={"py-10"}>

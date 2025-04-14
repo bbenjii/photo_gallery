@@ -34,7 +34,7 @@ export default function Header({section, session}) {
     return (
 
         <div
-            className={`flex flex-col w-full overscroll-none sticky top-0 bg-background ${menuIsOpen ? "h-screen overscroll-none" : ""}`}>
+            className={`flex flex-col w-full z-40 overscroll-none sticky top-0 bg-background ${menuIsOpen ? "h-screen overscroll-none" : ""}`}>
             <div className={"flex justify-between h-25 w-full items-center relative"}>
                 <ProfileMenu session={session}/>
                 <div className={"flex collapse md:visible gap-5 items-end absolute right-0 h-full"}>

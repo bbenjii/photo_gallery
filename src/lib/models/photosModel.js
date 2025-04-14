@@ -55,5 +55,16 @@ export async function uploadImage(filename, filetype, filebuffer){
     else{
         return({ message: "fail" });
     }
+}
 
+export async function deletePhotos(id){
+    const query = {"_id": new ObjectId(id)}
+    let res = await collection.deleteOne(query)
+
+
+    if (res.deletedCount === 1) {
+        return({ message: "ok" });
+    } else {
+        return({ message: "fail" });
+    }
 }

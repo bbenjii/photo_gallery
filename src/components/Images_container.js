@@ -3,53 +3,75 @@ import Image from "next/image";
 import {ImageCarousel} from "@/components/image-carousel";
 import {X, Move} from 'lucide-react';
 import {useEffect, useState} from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
-async function fetchImages(){
-    const baseURL = "http://localhost:3000/";
-    const params = new URLSearchParams({});
-    const url = baseURL + "/api/photos?" + params
-    const body = JSON.stringify({})
+import { Button } from "@/components/ui/button"
 
-    const response = await fetch(url,{
-        method: "GET",
-    } )
-
-    const data = await response.json()
-    // console.log(data)
-    return data.photos
-}
-
-async function deletePhoto(id){
-
-    console.log(id)
-    return
-
-    const baseURL = "http://localhost:3000/";
-    const params = new URLSearchParams({});
-    const url = baseURL + "/api/photos/" + id
-    const body = JSON.stringify({})
-
-    const response = await fetch(url,{
-        method: "DELETE",
-    } )
-
-    const data = await response.json()
-    // console.log(data)
-    return data.photos
-}
 
 export default function ImagesContainer({columnsNumber = 2, session}) {
     const [imageFiles, setImageFiles] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
-
-        fetchImages().then(images => setImageFiles(images))
+        fetchImages().then(images => {
+            setImageFiles(images)
+            setLoading(false)
+        })
 
     }, [])
 
+    useEffect(() => {
+        // if(!deleteDialogIsOpen) {setSelectedImage(null);}
+    },[deleteDialogIsOpen])
+
+    async function fetchImages(){
+        const baseURL = "http://192.168.2.194:3000/";
+        const params = new URLSearchParams({});
+        const url = "/api/photos?" + params
+        const body = JSON.stringify({})
 
 
+        const response = await fetch(url,{
+            method: "GET",
+        } )
 
+        const data = await response.json()
+
+        setImageFiles(data.photos)
+        setLoading(false)
+
+
+        // console.log(data)
+        return data.photos
+    }
+
+    async function deletePhoto(id){
+        console.log(id)
+        const baseURL = "http://localhost:3000/";
+        const params = new URLSearchParams({});
+        const url = "/api/photos/" + id
+        const body = JSON.stringify({})
+
+        const response = await fetch(url,{
+            method: "DELETE",
+        } )
+
+        const data = await response.json()
+
+        fetchImages()
+    }
+
+    // return <></>
 
     const gril_col = [
         "grid-cols-1",
@@ -66,38 +88,57 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
     })
 
     return (
-        <div className={`grid gap-x-4 w-full grid-cols-2 md:grid-cols-2`}>
+        <>
             {
-                columns.map((column, index) => {
-                    return (
-                        <div key={index} className="grid gap-y-4">
-                            {
-                                column.map((image, index) =>
-                                    (
-                                        <div key={index}>
-                                            <ImageView image={image} session={session} />
-
-                                        </div>
-                                    ))
-                            }
-                        </div>
-                    )
-                })
+                !loading &&
+                <div className={`grid gap-x-4 w-full grid-cols-2 md:grid-cols-2`}>
+                    {
+                        columns.map((column, index) => {
+                            return (
+                                <div key={index} className={`grid gap-y-4  `}>
+                                    {
+                                        column.map((image, index) =>
+                                            (
+                                                <div key={index} className={`${selectedImage === image ? "" : ""} `}>
+                                                    <ImageView image={image} session={session} setDeleteDialogIsOpen={setDeleteDialogIsOpen} setSelectedImage={setSelectedImage} selected={selectedImage === image} />
+                                                </div>
+                                            ))
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             }
-        </div>)
+            <DeleteDialog open={deleteDialogIsOpen} setOpen={setDeleteDialogIsOpen} handleDelete={(e)=>{
+                e.preventDefault();
+                deletePhoto(selectedImage._id).then(()=>{
+                    setDeleteDialogIsOpen(false)
+                    setSelectedImage(null)
+                })
+
+                // fetchImages()
+            }}/>
+        </>
+        )
 
 }
 
-function ImageView({image, index, session}) {
+function ImageView({image, index, session, setDeleteDialogIsOpen, setSelectedImage, selected}) {
     return (
-        <div key={index} className={"relative border group"}>
+        <div key={index} className={"relative border group"} onClick={() => setSelectedImage(image)}>
             {
                 session &&
-                <div className={"flex justify-between absolute top-0 w-full p-2 invisible group-hover:visible"}>
+                <div className={`flex justify-between invisible absolute top-0 w-full p-2  group-hover:visible ${selected ? "visible lg:invisible" : ""}`}>
                     <Move color={"black"}  className={"bg-white/90 cursor-pointer p-1 size-10"}/>
                     <X color={"black"}
                        className={"bg-white/90 cursor-pointer p-1 size-10"}
-                       onClick={() => { deletePhoto(image)}}
+                       onClick={() => {
+                           setDeleteDialogIsOpen(true)
+                           setSelectedImage(image)
+                           // deletePhoto(image._id)
+                       }
+                    }
                     />
                 </div>
             }
@@ -113,6 +154,27 @@ function ImageView({image, index, session}) {
                 // style={{ height: "auto", display: "block" }}
             />
         </div>
+    )
+}
+
+function DeleteDialog({open, setOpen, handleDelete}){
+
+    return (
+        <>
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent>
+                    <form onSubmit={handleDelete}>
+                    <DialogHeader >
+                        <DialogTitle>Delete photo</DialogTitle>
+                        <DialogDescription className={"flex justify-between"}>
+                            <span>Are you sure you want to delete this image?</span>
+                            <Button type={"submit"}> Delete</Button>
+                        </DialogDescription>
+                    </DialogHeader>
+                    </form>
+                </DialogContent>
+            </Dialog>
+        </>
     )
 }
 

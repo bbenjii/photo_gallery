@@ -47,7 +47,7 @@ export default function PhotoUpload({}){
 
 
     return(
-        <div className={"fixed bottom-4 right-4 "}>
+        <div className={"fixed bottom-4 right-4 z-40"}>
             <DropdownMenu>
                 <DropdownMenuTrigger>
                     <Plus size={40} className={"cursor-pointer border rounded-full bg-background/80 z-10"}/>
