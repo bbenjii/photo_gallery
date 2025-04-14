@@ -1,6 +1,6 @@
+export const dynamic = 'force-dynamic';
 
 import {deletePhotos} from "@/lib/models/photosModel";
-export const dynamic = 'force-dynamic';
 
 export async function DELETE(request, { params }){
     const searchParams = request.nextUrl.searchParams;

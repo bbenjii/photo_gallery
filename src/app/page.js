@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Image from "next/image";
 import { Menu } from 'lucide-react';
 import Header from "../components/header"
