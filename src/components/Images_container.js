@@ -49,6 +49,7 @@ export default function ImagesContainer({columnsNumber = 2, session}) {
 
         setImageFiles(data.photos)
         setLoading(false)
+        console.log(data)
 
 
         // console.log(data)
