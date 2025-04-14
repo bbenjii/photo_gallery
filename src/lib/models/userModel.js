@@ -1,7 +1,7 @@
 import mongoClient from "@/lib/core/mongodb";
 
 export async function fetchUser(email){
-    const client = await mongoClient
+    const client = await mongoClient()
     const db = client.db("photoGalleryDB")
     const collection = db.collection("users")
 
