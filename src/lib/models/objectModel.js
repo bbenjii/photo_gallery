@@ -10,7 +10,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import s3Client from "@/lib/core/s3-client";
 
 
-const bucketName = process.env.AWS_S3_BUCKET;
+const bucketName = process.env._AWS_S3_BUCKET;
 
 export async function getObjectURL(object_key) {
     const command = new GetObjectCommand({
