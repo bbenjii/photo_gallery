@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 export const dynamic = 'force-dynamic';
 
 import { handlers } from "@/auth" // Referring to the auth.ts we just created
