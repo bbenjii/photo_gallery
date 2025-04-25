@@ -106,16 +106,6 @@ src/
    http://localhost:3000
    ```
 
----
-
-
----
-
-## 📷 Screenshots
-
-Coming soon...
-
----
 
 ## Author
 
